@@ -16,5 +16,10 @@ namespace ASD_LAB_12
         {
             InitializeComponent();
         }
+
+        private void search_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
