@@ -45,7 +45,6 @@ namespace ASD_LAB_12
                 if (j < 0)
                 {
                     logRes += $"\n> Entrance of {pat} at {shift} ";
-
                     shift += (shift + pat.Length < txt.Length) ? pat.Length - badchar[txt[shift + pat.Length]] : 1;
                 }
                 else
