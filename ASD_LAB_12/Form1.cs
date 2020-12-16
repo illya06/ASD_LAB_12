@@ -19,7 +19,8 @@ namespace ASD_LAB_12
 
         private void search_Click(object sender, EventArgs e)
         {
-
+            text.Text = Task15.perform(text.Text);
+            result.Text = BMA.search(text.Text, word.Text);
         }
     }
 }
