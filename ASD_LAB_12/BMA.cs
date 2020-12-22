@@ -12,12 +12,11 @@ namespace ASD_LAB_12
 
         public static void buildCharArray(string str, int size, int[] badchar)
         {
-            int i;
-            for (i = 0; i < 256; i++)
-                badchar[i] = -1;
+            for (int i = 0; i < 256; i++)
+                badchar[i] = size;
 
-            for (i = 0; i < size; i++)
-                badchar[(int)str[i]] = i;
+            for (int i = 0; i < size; i++)
+                badchar[str[i]] = i;
         }
 
         public static string search(string txt, string pat)
@@ -28,32 +27,31 @@ namespace ASD_LAB_12
             int[] badchar = new int[256];
             buildCharArray(pat, pat.Length, badchar);
 
-            int shift = 0; 
-            
-            while (shift <= (txt.Length - pat.Length))
+            int i = pat.Length;
+            int j = pat.Length;
+
+            while (j > 0 && i <= txt.Length)
             {
-                int j = pat.Length - 1;
-
-                log += "\n";
-                while (j >= 0 && pat[j] == txt[shift + j])
+                if (pat[i] == txt[j])
                 {
-                    log += $"\nMatch at {shift + j} of letter {pat[j]}:({j})";
-                    j--;
-
-                }
-
-                if (j < 0)
-                {
-                    logRes += $"\n> Entrance of {pat} at {shift} ";
-                    shift += (shift + pat.Length < txt.Length) ? pat.Length - badchar[txt[shift + pat.Length]] : 1;
+                    i = i - 1;
+                    j = j - 1;
                 }
                 else
                 {
-                    log += $"\n Shifted on ({max(1, j - badchar[txt[shift + j]])}) from {shift} to ";
-                    shift += max(1, j - badchar[txt[shift + j]]);
-                    log += $"{shift}";
+                    i = i + badchar[txt[i]];
+                    j = pat.Length;
                 }
             }
+            if (j < 1)
+            {
+                return $"\n Entrance of ({pat}) in ({i+1})";
+            }
+            else
+            {
+                return "";
+            }
+
             return logRes + log;
         }
     }
