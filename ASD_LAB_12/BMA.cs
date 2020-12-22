@@ -39,7 +39,6 @@ namespace ASD_LAB_12
                 {
                     log += $"\nMatch at {shift + j} of letter {pat[j]}:({j})";
                     j--;
-
                 }
 
                 if (j < 0)
