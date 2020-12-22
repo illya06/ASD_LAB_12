@@ -10,14 +10,22 @@ namespace ASD_LAB_12
     {
         public static int max(int a, int b) { return (a > b) ? a : b; }
 
-        public static void buildCharArray(string str, int size, int[] badchar)
+        public static void buildCharArray(string pat, int size, Dictionary<string, int> table)
         {
-            int i;
-            for (i = 0; i < 256; i++)
-                badchar[i] = -1;
+            string answer = new String(pat.Distinct().ToArray());
 
-            for (i = 0; i < size; i++)
-                badchar[(int)str[i]] = i;
+            foreach (char element in answer)
+            {
+                table.Add($"{element}", 0);
+            }
+            table.Add("*", size);
+
+            for (int i = 0; i < size; i++)
+            {
+                string ch = $"{pat[i]}";
+                int maxShift = Math.Max(1, size - i - 1);
+                table[ch] = maxShift;
+            }
         }
 
         public static string search(string txt, string pat)
@@ -25,9 +33,9 @@ namespace ASD_LAB_12
             string log = "";
             string logRes = "";
 
-            int[] badchar = new int[256];
-            buildCharArray(pat, pat.Length, badchar);
-
+            Dictionary<string, int> table = new Dictionary<string, int>();
+            buildCharArray(pat, pat.Length, table);
+/*
             int shift = 0; 
             
             while (shift <= (txt.Length - pat.Length))
@@ -52,7 +60,7 @@ namespace ASD_LAB_12
                     shift += max(1, j - badchar[txt[shift + j]]);
                     log += $"{shift}";
                 }
-            }
+            }*/
             return logRes + log;
         }
     }
