@@ -8,9 +8,8 @@ namespace ASD_LAB_12
 {
     class BMA
     {
-        public static int max(int a, int b) { return (a > b) ? a : b; }
 
-        public static void buildCharArray(string pat, int size, Dictionary<string, int> table)
+        public static string buildCharArray(string pat, int size, Dictionary<string, int> table)
         {
             string answer = new String(pat.Distinct().ToArray());
 
@@ -26,6 +25,19 @@ namespace ASD_LAB_12
                 int maxShift = Math.Max(1, size - i - 1);
                 table[ch] = maxShift;
             }
+
+            #region build test output
+            string lower = "";
+            string upper = "";
+
+            foreach (KeyValuePair<string, int> kvp in table)
+            {
+                upper += kvp.Key.ToString() + " ";
+                lower += kvp.Value + " ";
+            }
+
+            return "\n" + upper + "\n" + lower;
+            #endregion
         }
 
         public static string search(string txt, string pat)
@@ -34,33 +46,40 @@ namespace ASD_LAB_12
             string logRes = "";
 
             Dictionary<string, int> table = new Dictionary<string, int>();
-            buildCharArray(pat, pat.Length, table);
-/*
-            int shift = 0; 
+            logRes += "Bad Char Table :\n" + buildCharArray(pat, pat.Length, table) + "\n";
             
-            while (shift <= (txt.Length - pat.Length))
+            int skip = 0;
+
+            for (int i = 0; i <= txt.Length - pat.Length; i += skip)
             {
-                int j = pat.Length - 1;
+                skip = 0;
 
-                log += "\n";
-                while (j >= 0 && pat[j] == txt[shift + j])
+                for (int j = pat.Length - 1; j >= 0; j--)
                 {
-                    log += $"\nMatch at {shift + j} of letter {pat[j]}:({j})";
-                    j--;
+                    if (pat[j] != txt[i + j])
+                    {
+                        if (table.ContainsKey($"{txt[i + j]}"))
+                        {
+                            skip = table[$"{txt[i + j]}"];
+                            log += $"\n  skipped from ({i}) to ({i+skip})";
+                            break;
+                        }
+                        else
+                        {
+                            skip = table["*"];
+                            log += $"\n  skipped from ({i}) to ({i + skip})";
+                            break;
+                        }
+                    }
                 }
 
-                if (j < 0)
+                if (skip == 0)
                 {
-                    logRes += $"\n> Entrance of {pat} at {shift} ";
-                    shift += (shift + pat.Length < txt.Length) ? pat.Length - badchar[txt[shift + pat.Length]] : 1;
+                    logRes += $"\nEntrance of ({pat}) at position ({i})";
+                    i += table["*"];
                 }
-                else
-                {
-                    log += $"\n Shifted on ({max(1, j - badchar[txt[shift + j]])}) from {shift} to ";
-                    shift += max(1, j - badchar[txt[shift + j]]);
-                    log += $"{shift}";
-                }
-            }*/
+            }
+
             return logRes + log;
         }
     }
