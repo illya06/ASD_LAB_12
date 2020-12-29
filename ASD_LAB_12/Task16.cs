@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task16__
+namespace ASD_LAB_12
 {
     /*
     
