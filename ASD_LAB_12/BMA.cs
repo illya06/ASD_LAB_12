@@ -8,15 +8,33 @@ namespace ASD_LAB_12
 {
     class BMA
     {
-        public static int max(int a, int b) { return (a > b) ? a : b; }
-
-        public static void buildCharArray(string str, int size, int[] badchar)
+        public static string buildCharArray(string pat, Dictionary<char, int> table)
         {
-            for (int i = 0; i < 256; i++)
-                badchar[i] = size;
+            int size = pat.Length;
+            string letters = new String(pat.Distinct().ToArray());
 
-            for (int i = 0; i < size; i++)
-                badchar[str[i]] = i;
+            for (int i = size - 2, j = 1; i >= 0; i--)
+            {
+                char ch = pat[i];
+                if (!table.ContainsKey(ch))
+                {
+                    table[ch] = j;
+                }
+                j++;
+            }
+
+            #region build test output
+            string lower = "";
+            string upper = "";
+
+            foreach (KeyValuePair<char, int> kvp in table)
+            {
+                upper += kvp.Key.ToString() + " ";
+                lower += kvp.Value + " ";
+            }
+
+            return "\n" + upper + "\n" + lower;
+            #endregion
         }
 
         public static string search(string txt, string pat)
@@ -24,35 +42,51 @@ namespace ASD_LAB_12
             string log = "";
             string logRes = "";
 
-            int[] badchar = new int[256];
-            buildCharArray(pat, pat.Length, badchar);
+            Dictionary<char, int> table = new Dictionary<char, int>();
+            logRes += "Bad Char Table :\n" + buildCharArray(pat, table) + "\n";
 
-            int i = pat.Length;
-            int j = pat.Length;
 
-            while (j > 0 && i <= txt.Length)
+            int m = pat.Length;
+            int n = txt.Length;
+
+            if (m > n)
             {
-                if (pat[i] == txt[j])
+                return "null";
+            }
+
+            int i = m - 1, j = m - 1;
+            while (j >= 0 && i < n)
+            {
+                if (txt[i] == pat[j])
                 {
-                    i = i - 1;
-                    j = j - 1;
+                    log += $"\nMatch at position ({i}) symbol ({txt[i]})";
+                    if (j == 0)
+                    {
+                        logRes += $"\nEntrance of word({pat}) at position ({i})";
+                        i += m;
+                        j = m - 1;
+                        continue;
+                    }
+                    i--;
+                    j--;
                 }
                 else
                 {
-                    i = i + badchar[txt[i]];
-                    j = pat.Length;
+                    if (!table.ContainsKey(txt[i]))
+                    {
+                        log += $"\nMismatch at ({i}) | skipping on ({m}) -> ({i+m})";
+                        i += m;
+                    }
+                    else
+                    {
+                        log += $"\nMismatch at ({i}) | skipping on ({table[txt[i]]}) -> ({i + table[txt[i]]})";
+                        i += table[txt[i]];
+                    }
+                    j = m - 1;
                 }
             }
-            if (j < 1)
-            {
-                return $"\n Entrance of ({pat}) in ({i+1})";
-            }
-            else
-            {
-                return "";
-            }
 
-            return logRes + log;
+            return logRes + "\n\n" + log;
         }
     }
 }

@@ -33,6 +33,7 @@
             this.search = new System.Windows.Forms.Button();
             this.text = new System.Windows.Forms.RichTextBox();
             this.result = new System.Windows.Forms.RichTextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // word
@@ -45,7 +46,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(280, 49);
+            this.label1.Location = new System.Drawing.Point(52, 92);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 1;
@@ -64,20 +65,29 @@
             // text
             // 
             this.text.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.text.Location = new System.Drawing.Point(283, 66);
+            this.text.Location = new System.Drawing.Point(55, 108);
             this.text.Name = "text";
-            this.text.Size = new System.Drawing.Size(100, 96);
+            this.text.Size = new System.Drawing.Size(181, 78);
             this.text.TabIndex = 3;
             this.text.Text = "";
             // 
             // result
             // 
             this.result.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.result.Location = new System.Drawing.Point(55, 90);
+            this.result.Location = new System.Drawing.Point(265, 82);
             this.result.Name = "result";
-            this.result.Size = new System.Drawing.Size(181, 72);
+            this.result.Size = new System.Drawing.Size(181, 104);
             this.result.TabIndex = 4;
             this.result.Text = "";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(262, 66);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "LOG : ";
             // 
             // Form1
             // 
@@ -85,6 +95,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(472, 226);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.result);
             this.Controls.Add(this.text);
             this.Controls.Add(this.search);
@@ -104,6 +115,7 @@
         private System.Windows.Forms.Button search;
         private System.Windows.Forms.RichTextBox text;
         private System.Windows.Forms.RichTextBox result;
+        private System.Windows.Forms.Label label2;
     }
 }
 
