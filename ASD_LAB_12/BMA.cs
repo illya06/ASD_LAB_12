@@ -8,7 +8,6 @@ namespace ASD_LAB_12
 {
     class BMA
     {
-
         public static string buildCharArray(string pat, int size, Dictionary<string, int> table)
         {
             string answer = new String(pat.Distinct().ToArray());
@@ -71,6 +70,7 @@ namespace ASD_LAB_12
                             break;
                         }
                     }
+                    log += $"\n match at position ({j}) - char ({pat[j]})";
                 }
 
                 if (skip == 0)
