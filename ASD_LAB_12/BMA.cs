@@ -13,7 +13,7 @@ namespace ASD_LAB_12
             int size = pat.Length;
             string letters = new String(pat.Distinct().ToArray());
 
-            for (int i = size - 2, j = 1; i >= 0; i--)
+            for (int i = size - 1, j = 1; i >= 0; i--)
             {
                 char ch = pat[i];
                 if (!table.ContainsKey(ch))
@@ -43,7 +43,7 @@ namespace ASD_LAB_12
             string logRes = "";
 
             Dictionary<char, int> table = new Dictionary<char, int>();
-            logRes += "Bad Char Table :\n" + buildCharArray(pat, table) + "\n";
+            logRes += "Bad Char Table :\n" + buildCharArray(pat, table) + "";
 
 
             int m = pat.Length;
@@ -80,13 +80,13 @@ namespace ASD_LAB_12
                     else
                     {
                         log += $"\nMismatch at ({i}) | skipping on ({table[txt[i]]}) -> ({i + table[txt[i]]})";
-                        i += table[txt[i]];
+                        i += table[txt[i]] - 1;
                     }
                     j = m - 1;
                 }
             }
 
-            return logRes + "\n\n" + log;
+            return logRes + "\n" + log;
         }
     }
 }
